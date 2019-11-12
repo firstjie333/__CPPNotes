@@ -1,7 +1,7 @@
 ## auto
 
 1. 必须有初值
-2. 编译器==会动忽略顶层const==
+2. 编译器==会动忽略顶层const，但会保留底层const==
 
 ```cpp
 const int a = 10;

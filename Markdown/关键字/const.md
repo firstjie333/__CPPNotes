@@ -100,8 +100,31 @@ pa2 = pb; // 把pb的地址赋值给pa2, pa2是底层的，pb可以忽略顶层�
    const int d = get_size(); //不是常量表达式，运行时才知道
    ```
 
-2. C++11的规定，运行将变量声明为constexpr。目的是让编译器来检查验证该变量是不是一个常量表达式。以便虽然你想定义一个常量表达式，但是const int d = get_size(); 确是在运行过程中值才被确定。
-3. 
+2. C++11的规定，运行将变量声明为constexpr。目的是让编译器来检查验证该变量是不是一个常量表达式。以便虽然你想定义一个常量表达式，但是const int d = get_size();却是在运行过程中值才被确定。
+
+3. constexpr如果和指针一起用，只针对指针有效，对指针所指向的对象无效。即：constexpr的作用是把他所定义的对象置为顶层const
+
+   ```cpp
+   const int a = 10; // 等价于  constexpr int a = 10; 
+   
+   constexpr int * pa = &a //等价于  int * const pa = &a
+     
+   constexpr const int * pb = &a; //等价于  const int * const pb = &a
+   ```
+
+   
+
+## 类型别名 与 指针混用
+
+1. using  或  typedef
+2. 容易出错的例子, 不能把类型别名换成原来的代进去看
+
+```cpp
+typedef char * CC;
+
+const CC p1 = 0; // (1) p1是一个常量对象，不可改变，类型为CC，即指向char的指针，所以p1是个常量指针
+const CC *p2; // （2）p2是一个指针，const 表示不能通过p2去改变 其所指向对象的值，而他所指向的对象是CC 
+```
 
 
 
@@ -110,5 +133,6 @@ pa2 = pb; // 把pb的地址赋值给pa2, pa2是底层的，pb可以忽略顶层�
 ## const 和 constexpr
 
 1. const 变量的初始化可以延迟到运行时，而 constexpr 变量必须在编译时进行初始化。
-   所有constexpr对象都是const的，但是不是所有的const对象都是constexpr的。
+2. 所有constexpr对象都是const的，但是不是所有的const对象都是constexpr的。
+3. 
 
