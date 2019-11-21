@@ -86,6 +86,8 @@ pa2 = pb; // 把pb的地址赋值给pa2, pa2是底层的，pb可以忽略顶层�
 // int *n = pa2; //错误
 ```
 
+6. 类的const 变量 只能调用const 方法，const 成员函数的目的是不改变类的成员变量
+
 
 
 ## constexpr 常量表达式
@@ -112,12 +114,14 @@ pa2 = pb; // 把pb的地址赋值给pa2, pa2是底层的，pb可以忽略顶层�
    constexpr const int * pb = &a; //等价于  const int * const pb = &a
    ```
 
-   
+4. constexpr 可以修饰类的成员函数，被修饰的函数在执行期间不会改变对象的值.所修饰的函数在其所有参数都是constexpr时，一定会返回constexpr
+
+
 
 ## 类型别名 与 指针混用
 
 1. using  或  typedef
-2. 容易出错的例子, 不能把类型别名换成原来的代进去看
+2. 容易出错的例子, ==不能把类型别名换成原来的代进去看==。方法是用const 与邻近的一层 括起来
 
 ```cpp
 typedef char * CC;

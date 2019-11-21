@@ -2,8 +2,8 @@
 
 1. 推段表达式类型
 
-```
-decltype (x) y 编译时，推导x的类型，并且作为y的类型
+```cpp
+decltype(x) y 编译时，推导x的类型，并且作为y的类型
 ```
 
 2. 与using/typedef 合用，用于定义类型
