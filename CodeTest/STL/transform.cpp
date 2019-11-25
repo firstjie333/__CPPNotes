@@ -78,16 +78,9 @@ int main()
 
 
     std::cout << "newSum="<< std::accumulate(D.begin(), D.end(), 0, [](int a, int b) -> int {return a+b+2;}); 
-
-
-
-
-
-
-
 }
 
-using Func  = std::function<void (int)>;
+/* using Func  = std::function<void (int)>;
 
 Func make_f(){
     int a = 12;
@@ -98,5 +91,5 @@ Func make_f(){
     return p;
 }
 
-make_f()(1);  // 1
+make_f()(1);  // 1 */
 
