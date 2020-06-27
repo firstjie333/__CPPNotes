@@ -1,0 +1,50 @@
+1. std::function、std::bind、std::placeholders.c++11 . 三个特性都在functional文件中定义，故使用时需要“#include<functional>”
+
+2. 类模版`std::function`是一种通用、多态的函数封装。`std::function`的实例可以对任何可以调用的目标实体进行存储、复制、和调用操作，这些目标实体包括普通函数、Lambda表达式、函数指针、以及其它函数对象等std::function包含于头文件 #include<functional>中，可将各种可调用实体进行封装统一，包括
+
+    - 普通函数
+
+    - lambda表达式
+    - 函数指针
+    - 仿函数(functor 重载括号运算符实现)
+    - 类成员函数
+    - 静态成员函数
+
+    
+
+    3. std::bind函数将可调用对象(用法中所述6类)和可调用对象的参数进行绑定，返回新的可调用对象(std::function类型，参数列表可能改变)，返回的新的std::function可调用对象的参数列表根据bind函数实参中std::placeholders::_x从小到大对应的参数确定。
+
+    ```cpp
+    void XXXXX::updateBounds(const Eigen::Vector3d &pt)
+    {
+        typedef std::function<double(const double &, const double &)> Comp;
+        auto updater = [](const Eigen::Vector3d &inPt, Eigen::Vector3d &outPt, Comp cmp)
+        {
+            outPt[0] = cmp(inPt[0], outPt[0]);
+            outPt[1] = cmp(inPt[1], outPt[1]);
+            outPt[2] = cmp(inPt[2], outPt[2]);
+        };
+    
+        if (gridAnchor_ == Eigen::Vector3d{0, 0, 0} && gridUpBound_ == Eigen::Vector3d{0, 0, 0})
+        {
+            gridAnchor_ = pt;
+            gridUpBound_ = gridAnchor_;
+        }
+        else
+        {
+            updater(pt, gridAnchor_,  [](const double &l, const double &r) -> double { return l < r ? l : r; });
+            updater(pt, gridUpBound_, [](const double &l, const double &r) -> double { return l < r ? r : l; });
+        }
+    }
+    ```
+
+函数对象
+
+模板函数
+
+模板函数对象
+
+函数指针
+
+函数指针不能绑定到类的成员变量上面
+
